@@ -24,9 +24,14 @@ const color = Plot.scale({
 });
 ```
 
+<!-- Add script to the <head> of your page to load the embeddable map component -->
+<script type="module" src="https://js.arcgis.com/4.34/embeddable-components/"></script>
+
 <!-- Cards with big numbers -->
 
 <div class="grid grid-cols-4">
+  <!-- Add custom element to <body> of your page -->
+  <arcgis-embedded-map style="height:600px;width:700px;" item-id="a77a22fa572a4d46be9fa9eb9867495a" theme="light" bookmarks-enabled legend-enabled information-enabled share-enabled center="-79.8937117750767,40.444872904081734"scale="72223.819286" portal-url="https://carnegiemellon.maps.arcgis.com"></arcgis-embedded-map>
   <div class="card">
     <h2>United States 🇺🇸</h2>
     <span class="big">${launches.filter((d) => d.stateId === "US").length.toLocaleString("en-US")}</span>

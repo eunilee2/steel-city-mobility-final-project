@@ -1,4 +1,4 @@
-# Final Project
+npm run dev# Final Project
 
 This is an [Observable Framework](https://observablehq.com/framework) app. To start the local preview server, run:
 
