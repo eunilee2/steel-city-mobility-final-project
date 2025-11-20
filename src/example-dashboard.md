@@ -4,12 +4,14 @@ title: Example dashboard
 toc: false
 ---
 
-# Rocket launches 🚀
+# Mobility & Income in Pittsburgh
 
 <!-- Load and transform the data -->
 
 ```js
 const launches = FileAttachment("data/launches.csv").csv({typed: true});
+const stopsData = await FileAttachment("data/bus_stops.json").json();
+const stops = stopsData.geometries;
 ```
 
 <!-- A shared color scale for consistency, sorted by the number of launches -->
@@ -23,6 +25,10 @@ const color = Plot.scale({
   }
 });
 ```
+<div class="card">
+  <h2>Pittsburgh Total Bus Stops 🚌</h2>
+  <span class="big">${stops.length.toLocaleString("en-US")}</span>
+</div>
 
 <!-- Add script to the <head> of your page to load the embeddable map component -->
 <script type="module" src="https://js.arcgis.com/4.34/embeddable-components/"></script>
