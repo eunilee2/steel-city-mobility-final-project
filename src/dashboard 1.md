@@ -217,4 +217,7 @@ This shows that mobility inequality in Pittsburgh isn’t random, it follows dem
 
 ---
 
+Note: All Tableau charts were generated using demographic datasets obtained from ArcGIS Online layers that were used to create the Maps (https://arcg.is/0Ty0rT and https://arcg.is/fvbTv0).
+
+
 *Built with Observable, Tableau Public, and ArcGIS (Dec 2025)*  
