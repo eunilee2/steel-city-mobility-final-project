@@ -244,3 +244,12 @@ These maps suggest likely **transit access gaps**, especially in marginalized an
 ---
 
 *Built with Observable and ArcGIS Online (Dec 2025)*
+
+*Data Sources Used*
+- *https://carnegiemellon.maps.arcgis.com/home/item.html?id=bf1b6035469849a7ac580818cbfa3502*
+- *https://carnegiemellon.maps.arcgis.com/home/item.html?id=f1e95b8a159149b586c7cd864ad362b5*
+- *https://carnegiemellon.maps.arcgis.com/home/item.html?id=d227d6a4ee3e4d2d87eb9843ee14dd87*
+- *https://carnegiemellon.maps.arcgis.com/home/item.html?id=9a9e43ec1603446880c50d4ed1df2207*
+- *https://carnegiemellon.maps.arcgis.com/home/item.html?id=23ab8028f1784de4b0810104cd5d1c8f*
+- *https://carnegiemellon.maps.arcgis.com/home/item.html?id=573b883f8fd1487991a3136759b00d9c*
+
