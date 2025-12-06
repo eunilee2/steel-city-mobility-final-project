@@ -1,5 +1,5 @@
 ---
-theme: dashboard
+theme: light
 title: Demographics of Pittsburgh
 toc: false
 ---

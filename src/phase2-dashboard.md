@@ -1,5 +1,5 @@
 ---
-theme: dashboard
+theme: light
 title: Phase 2 Dashboard
 toc: false
 ---
