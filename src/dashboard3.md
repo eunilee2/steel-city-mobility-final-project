@@ -6,6 +6,8 @@ toc: false
 
 # Mobility Equity in Pittsburgh
 
+## Two Faces of Pittsburgh Transit Access
+
 ```js
 // Persona data grounded in real Pittsburgh neighborhood statistics
 const personas = {
@@ -99,7 +101,7 @@ const timelines = {
   }
 };
 ```
-## Two Faces of Pittsburgh Transit Access
+
 
 Public transit in Pittsburgh is not experienced equally across communities. While many lower-income neighborhoods within the city have moderate to adequate bus access, poorer suburbs farther from the core often face limited routes and are most vulnerable to service reductions. Because residents in lower-income areas rely on transit far more than wealthier neighborhoods, changes to bus frequency, routing, or reliability disproportionately affect them.
 
