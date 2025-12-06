@@ -114,7 +114,7 @@ toc: false
 <iframe width="700" height="600" allow="local-network-access; geolocation" title="Mobility Equity Map: Disability, Age, and Race" src="https://carnegiemellon.maps.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=9fe674b63681452c87f55d94257ede6d&theme=light&bookmarks=true&heading=true&legend=true&information=true&scroll=false&center=-79.95869383411862,40.44552048874948&scale=144447.638572" ></iframe>
  </div>
 
-## Dahboard 2 • Demographics & Mobility Equity Dashboard Report 
+## Dashboard 1 • Demographics of Pittsburgh Dashboard Report 
 ---
 This report summarizes the key demographic patterns across Pittsburgh and highlights how these populations relate to vulnerability and mobility needs. The goal of this phase was to build a clear picture of *who* lives in Pittsburgh by race, age, and disability status and then use mapping tools to understand *where* these groups are concentrated across the city.
 
