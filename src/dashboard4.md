@@ -6,20 +6,19 @@ toc: false
 
 # Mobility Equity in Pittsburgh
 
-## Two Faces of Pittsburgh Transit Access
-
 ```js
 // Persona data grounded in real Pittsburgh neighborhood statistics
 const personas = {
-  marcus: {
+  jordan: {
     name: "Jordan",
     age: 34,
     demographic: "1-person household",
-    neighborhood: "Brentwood, Pittsburgh",
+    neighborhood: "Brentwood, Allegheny County",
+    busRoutes: ["51", "Y1"],
     censustract: "Census Tract 4781",
     medianIncome: "$54,446",
     noCarHouseholds: "21.5% (413 households)",
-    transitFrequency: "High - 2 routes (Y1, 51) with 27 stops",
+    transitAccess: "Low - 2 routes with 27 stops",
     occupation: "Fast Food/Retail Worker",
     workLocation: "Chipotle at Forbes Avenue, Oakland",
     dailyResponsibilities: [
@@ -29,18 +28,19 @@ const personas = {
       "Daily commute navigates high-poverty area"
     ],
     transportationMode: "Bus + Walking",
-    monthlyTransitCost: "$56-60 (monthly transit cost)"
+    // monthlyTransitCost: "$56-60 (monthly transit cost)"
   },
   
-  jen: {
+  jocelyn: {
     name: "Jocelyn",
     age: 44,
     demographic: "1-person household",
     neighborhood: "Lower Lawrenceville, Pittsburgh",
+    busRoutes: ["91", "64", "88", "86", "54"],
     censustract: "Census Tract 603",
     medianIncome: "$86,094",
     noCarHouseholds: "11.3% (174 households)",
-    transitFrequency: "Medium - 5 routes with 41 bus stops",
+    transitAccess: "High- 5 routes with 41 bus stops",
     occupation: "Registered Nurse",
     workLocation: "UPMC University Center Medical Building (University of Pittsburgh)",
     dailyResponsibilities: [
@@ -49,14 +49,14 @@ const personas = {
       "Has car access for convenience/optional errands",
       "Chooses bus for commute when possible"
     ],
-    transportationMode: "Bus + Car (optional)",
-    monthlyTransitCost: "$56-60 (transit choice) or $350-400 (car costs)"
+    transportationMode: "Bus + Car",
+    // monthlyTransitCost: "$56-60 (transit choice) or $350-400 (car costs)"
   }
 };
 
 // Timeline data for each persona's daily commute
 const timelines = {
-  marcus: {
+  jordan: {
     morning: {
       commuteStart: "8:00 AM",
       walkToStop: { duration: "10 min", distance: "0.4 mi" },
@@ -77,7 +77,7 @@ const timelines = {
       concerns: "Long commute home, limited evening service frequency"
     }
   },
-  jen: {
+  jocelyn: {
     transit: {
       morning: {
         commuteStart: "8:40 AM",
@@ -99,88 +99,123 @@ const timelines = {
   }
 };
 ```
+## Two Faces of Pittsburgh Transit Access
+
+Public transit in Pittsburgh is not experienced equally across communities. While many lower-income neighborhoods within the city have moderate to adequate bus access, poorer suburbs farther from the core often face limited routes and are most vulnerable to service reductions. Because residents in lower-income areas rely on transit far more than wealthier neighborhoods, changes to bus frequency, routing, or reliability disproportionately affect them.
+
+This dashboard examines these inequities by exploring: (1) how socioeconomic status relates to transit accessibility, and (2) how different socioeconomic groups experience bus service. Two personas illustrate how neighborhood context shapes daily mobility and transit dependence.
 
 ```js
 html`
-<div class="grid grid-cols-2">
+<div class="grid grid-cols-2" style="margin-top: 2rem;">
   <div class="card" style="padding: 2rem;">
     <div style="border-bottom: 3px solid #4e79a7; padding-bottom: 1rem; margin-bottom: 1rem;">
-      <h2 style="margin: 0;">${personas.marcus.name}</h2>
-      <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem;">${personas.marcus.age} years old • ${personas.marcus.demographic}</p>
+      <h2 style="margin: 0;">${personas.jordan.name}</h2>
+      <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem;">${personas.jordan.age} years old • ${personas.jordan.demographic} • ${personas.jordan.neighborhood}</p>
     </div>
     
     <div style="margin-bottom: 1.5rem;">
       <p style="font-weight: 600; margin: 0 0 0.5rem 0;">💼 Work & Responsibilities</p>
-      <p style="margin: 0.3rem 0; font-size: 0.9rem;"><strong>${personas.marcus.occupation}</strong></p>
-      <p style="margin: 0.3rem 0; font-size: 0.9rem;">${personas.marcus.workLocation}</p>
+      <p style="margin: 0.3rem 0; font-size: 0.9rem;"><strong>${personas.jordan.occupation}</strong></p>
+      <p style="margin: 0.3rem 0; font-size: 0.9rem;">${personas.jordan.workLocation}</p>
     </div>
     
     <div style="margin-bottom: 1.5rem;">
       <p style="font-weight: 600; margin: 0 0 0.5rem 0;">📅 Daily Responsibilities</p>
       <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
-        ${personas.marcus.dailyResponsibilities.map(r => html`<li style="margin: 0.3rem 0;">${r}</li>`)}
+        ${personas.jordan.dailyResponsibilities.map(r => html`<li style="margin: 0.3rem 0;">${r}</li>`)}
       </ul>
-    </div>
-    
-    <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(78, 121, 167, 0.08); border-radius: 0.5rem;">
-      <p style="font-weight: 600; margin: 0 0 0.5rem 0;">📍 Neighborhood</p>
-      <p style="margin: 0;">${personas.marcus.neighborhood}</p>
-      <p style="margin: 0; font-size: 0.9rem;">${personas.marcus.censustract}</p>
-    </div>
-    
-    <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(78, 121, 167, 0.08); border-radius: 0.5rem;">
-      <p style="font-weight: 600; margin: 0 0 0.5rem 0;">Neighborhood Statistics</p>
-      <div style="font-size: 0.9rem;">
-        <p style="margin: 0.3rem 0;"><strong>Median Income:</strong> ${personas.marcus.medianIncome}</p>
-        <p style="margin: 0.3rem 0;"><strong>No-Vehicle Households:</strong> ${personas.marcus.noCarHouseholds}</p>
-        <p style="margin: 0.3rem 0;"><strong>Transit Access:</strong> ${personas.marcus.transitFrequency}</p>
-        <p style="margin: 0.3rem 0;"><strong>Primary Transport:</strong> ${personas.marcus.transportationMode}</p>
-        <p style="margin: 0.3rem 0;"><strong>Monthly Transit Cost:</strong> ${personas.marcus.monthlyTransitCost}</p>
-      </div>
     </div>
   </div>
 
   <div class="card" style="padding: 2rem;">
     <div style="border-bottom: 3px solid #f28e2c; padding-bottom: 1rem; margin-bottom: 1rem;">
-      <h2 style="margin: 0;">${personas.jen.name}</h2>
-      <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem;">${personas.jen.age} years old • ${personas.jen.demographic}</p>
+      <h2 style="margin: 0;">${personas.jocelyn.name}</h2>
+      <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem;">${personas.jocelyn.age} years old • ${personas.jocelyn.demographic}</p>
     </div>
     
     <div style="margin-bottom: 1.5rem;">
       <p style="font-weight: 600; margin: 0 0 0.5rem 0;">💼 Work & Responsibilities</p>
-      <p style="margin: 0.3rem 0; font-size: 0.9rem;"><strong>${personas.jen.occupation}</strong></p>
-      <p style="margin: 0.3rem 0; font-size: 0.9rem;">${personas.jen.workLocation}</p>
+      <p style="margin: 0.3rem 0; font-size: 0.9rem;"><strong>${personas.jocelyn.occupation}</strong></p>
+      <p style="margin: 0.3rem 0; font-size: 0.9rem;">${personas.jocelyn.workLocation}</p>
     </div>
     
     <div style="margin-bottom: 1.5rem;">
       <p style="font-weight: 600; margin: 0 0 0.5rem 0;">📅 Daily Schedule</p>
       <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem;">
-        ${personas.jen.dailyResponsibilities.map(r => html`<li style="margin: 0.3rem 0;">${r}</li>`)}
+        ${personas.jocelyn.dailyResponsibilities.map(r => html`<li style="margin: 0.3rem 0;">${r}</li>`)}
       </ul>
-    </div>
-    
-    <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(78, 121, 167, 0.08); border-radius: 0.5rem;">
-      <p style="font-weight: 600; margin: 0 0 0.5rem 0;">📍 Neighborhood</p>
-      <p style="margin: 0;">${personas.jen.neighborhood}</p>
-      <p style="margin: 0; font-size: 0.9rem;">${personas.jen.censustract}</p>
-    </div>
-    
-    <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(78, 121, 167, 0.08); border-radius: 0.5rem;">
-      <p style="font-weight: 600; margin: 0 0 0.5rem 0;">Neighborhood Statistics</p>
-      <div style="font-size: 0.9rem;">
-        <p style="margin: 0.3rem 0;"><strong>Median Income:</strong> ${personas.jen.medianIncome}</p>
-        <p style="margin: 0.3rem 0;"><strong>No-Car Households:</strong> ${personas.jen.noCarHouseholds}</p>
-        <p style="margin: 0.3rem 0;"><strong>Transit Frequency:</strong> ${personas.jen.transitFrequency}</p>
-        <p style="margin: 0.3rem 0;"><strong>Primary Transport:</strong> ${personas.jen.transportationMode}</p>
-        <p style="margin: 0.3rem 0;"><strong>Transit Cost/Month:</strong> ${personas.jen.monthlyTransitCost}</p>
-      </div>
     </div>
   </div>
 </div>
 `
 ```
+To begin exploring transit accessibility and equity across socioeconomic groups, we follow two personas. Jordan, a car-less fast-food worker, relies entirely on bus service from a higher-poverty neighborhood. Jocelyn, a registered nurse with a car, uses transit by choice. Their narratives reveal how income, location, and vehicle access shape mobility.
+
+## Persona Neighborhood Context
+
+```js
+html`
+<div class="grid grid-cols-2" style="margin-top: 2rem;">
+  <div class="card" style="padding: 2rem;">
+    <div style="border-bottom: 3px solid #4e79a7; padding-bottom: 1rem; margin-bottom: 1rem;">
+      <h3 style="margin: 0; color: #4e79a7;">📍 ${personas.jordan.neighborhood}</h3>
+      <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">${personas.jordan.censustract}</p>
+    </div>
+    
+    <div style="font-size: 0.9rem; margin-bottom: 1.5rem;">
+      <p style="margin: 0.3rem 0;"><strong>Median Income:</strong> ${personas.jordan.medianIncome}</p>
+      <p style="margin: 0.3rem 0;"><strong>No-Vehicle Households:</strong> ${personas.jordan.noCarHouseholds}</p>
+      <p style="margin: 0.3rem 0;"><strong>Transit Access:</strong> ${personas.jordan.transitAccess}</p>
+      <p style="margin: 0.3rem 0;"><strong>Bus Routes:</strong> ${personas.jordan.busRoutes.join(", ")}</p>
+      <p style="margin: 0.3rem 0;"><strong>Primary Transport:</strong> ${personas.jordan.transportationMode}</p>
+    </div>
+  </div>
+
+  <div class="card" style="padding: 2rem;">
+    <div style="border-bottom: 3px solid #f28e2c; padding-bottom: 1rem; margin-bottom: 1rem;">
+      <h3 style="margin: 0; color: #f28e2c;">📍 ${personas.jocelyn.neighborhood}</h3>
+      <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">${personas.jocelyn.censustract}</p>
+    </div>
+    
+    <div style="font-size: 0.9rem;">
+      <p style="margin: 0.3rem 0;"><strong>Median Income:</strong> ${personas.jocelyn.medianIncome}</p>
+      <p style="margin: 0.3rem 0;"><strong>No-Car Households:</strong> ${personas.jocelyn.noCarHouseholds}</p>
+      <p style="margin: 0.3rem 0;"><strong>Transit Access:</strong> ${personas.jocelyn.transitAccess}</p>
+      <p style="margin: 0.3rem 0;"><strong>Bus Routes:</strong> ${personas.jocelyn.busRoutes.join(", ")}</p>
+      <p style="margin: 0.3rem 0;"><strong>Primary Transport:</strong> ${personas.jocelyn.transportationMode}</p>
+    </div>
+  </div>
+</div>
+`
+```
+### Poverty Level by Tracts
+Click on the tract with the marker to see details about poverty level in each persona's neighborhood.
+Poverty levels are broken down into age groups: children (under 18), working-age adults (18-64), and seniors (65+).
+```js
+html`
+<div class="grid grid-cols-2" style="margin-top: 2rem;">
+    <iframe width="100%" height="400" allow="local-network-access; geolocation" title="Neighborhood-Level Visual Snapshot - Poverty Level" src="https://carnegiemellon.maps.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=bafd1bfe129149c7851502ae9b77c2d9&theme=light&bookmarks=true&legend=true&scroll=false&center=-79.99695270247207,40.36826072127577&scale=36111.909643" ></iframe>
+    <iframe width="100%" height="400" allow="local-network-access; geolocation" title="Neighborhood-Level Visual Snapshot - Poverty Level" src="https://carnegiemellon.maps.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=bafd1bfe129149c7851502ae9b77c2d9&theme=light&bookmarks=true&legend=true&share=true&scroll=false&center=-79.96877964851696,40.45971867043966&scale=36111.909643" ></iframe>
+</div>
+`
+```
+### % of Households with No Vehicle Access by Tracts
+Click on the tract with the marker to see details about % of households with no vehicle access in each persona's neighborhood. % of vehicle access is broken down into number of people in the household: 1-person, 2-person, 3-person, 4+ person.
+```js
+html`
+<div class="grid grid-cols-2" style="margin-top: 2rem;">
+    <iframe width="100%" height="400" allow="local-network-access; geolocation" title="Neighborhood-Level Visual Snapshot - No Vehicle Access" src="https://carnegiemellon.maps.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=c849f620805c44e5b354c858d14ff306&theme=light&bookmarks=true&legend=true&scroll=false&center=-79.97536628432029,40.36999364431445&scale=72223.819286" ></iframe>
+    <iframe width="100%" height="400" allow="local-network-access; geolocation" title="Neighborhood-Level Visual Snapshot - No Vehicle Access" src="https://carnegiemellon.maps.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=c849f620805c44e5b354c858d14ff306&theme=light&bookmarks=true&legend=true&scroll=false&center=-79.95809372780174,40.45668190346116&scale=36111.909643" ></iframe>
+</div>
+`
+```
+Brentwood reflects a community where many residents lack vehicles and rely heavily on a small number of bus routes, making daily travel long and burdensome. In contrast, Lower Lawrenceville offers stronger economic stability and far denser transit coverage, giving residents more flexibility and shorter, more reliable trips. Together, these neighborhoods illustrate how location and transit access shape mobility options, time costs, and overall quality of life for Pittsburgh residents.
 
 ## Daily Commute Timeline Comparison
+
+Jordan’s commute from Brentwood reflects the reality of a transit-dependent rider: long walks to limited bus routes, a required transfer, and nearly an hour of travel before reaching work. His morning is shaped by fixed schedules and little room for error.
+Jocelyn’s trip from Lower Lawrenceville looks entirely different. With stronger transit coverage, her bus ride is quick and predictable. When transit isn’t convenient, she can simply drive. Her mobility is defined by choice, while Jordan’s is defined by necessity. Their timelines reveal how neighborhood context directly influences time, flexibility, and daily stress.
 
 ```js
 html`
@@ -242,43 +277,43 @@ html`
         
         <div style="margin-bottom: 1rem; position: relative;">
           <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
-          <p style="margin: 0; font-weight: 600;">${timelines.marcus.morning.commuteStart}</p>
+          <p style="margin: 0; font-weight: 600;">${timelines.jordan.morning.commuteStart}</p>
           <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Leaves home in Brentwood</p>
         </div>
         
         <div style="margin-bottom: 1rem; position: relative;">
           <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
           <p style="margin: 0; font-weight: 600;">Walk to 51 bus stop</p>
-          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.marcus.morning.walkToStop.duration} • 📍 ${timelines.marcus.morning.walkToStop.distance}</p>
+          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jordan.morning.walkToStop.duration} • 📍 ${timelines.jordan.morning.walkToStop.distance}</p>
         </div>
         
         <div style="margin-bottom: 1rem; position: relative;">
           <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
           <p style="margin: 0; font-weight: 600;">51 Bus ride</p>
-          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.marcus.morning.waitTime.duration}</p>
+          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jordan.morning.waitTime.duration}</p>
         </div>
         
         <div style="margin-bottom: 1rem; position: relative;">
           <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #6b9bc3; border-radius: 50%; border: 2px solid #fff;"></div>
           <p style="margin: 0; font-weight: 600;">Wait & Transfer</p>
-          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.marcus.morning.transfer.duration} for 54 bus</p>
+          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jordan.morning.transfer.duration} for 54 bus</p>
         </div>
         
         <div style="margin-bottom: 1rem; position: relative;">
           <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #6b9bc3; border-radius: 50%; border: 2px solid #fff;"></div>
           <p style="margin: 0; font-weight: 600;">54 Bus to Oakland</p>
-          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.marcus.morning.rideDuration}</p>
+          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jordan.morning.rideDuration}</p>
         </div>
         
         <div style="margin-bottom: 1rem; position: relative;">
           <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
           <p style="margin: 0; font-weight: 600;">Walk to Chipotle</p>
-          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.marcus.morning.walkToWork.duration} down Craig Street</p>
+          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jordan.morning.walkToWork.duration} down Craig Street</p>
         </div>
         
         <div style="position: relative;">
           <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #28a745; border-radius: 50%; border: 2px solid #fff;"></div>
-          <p style="margin: 0; color: #28a745; font-weight: 600;">${timelines.marcus.morning.arrival}</p>
+          <p style="margin: 0; color: #28a745; font-weight: 600;">${timelines.jordan.morning.arrival}</p>
           <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Arrives at work</p>
           <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; font-style: italic;">Total: ~60 minutes</p>
         </div>
@@ -356,31 +391,31 @@ html`
           
           <div style="margin-bottom: 1rem; position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
-            <p style="margin: 0; font-weight: 600;">${timelines.jen.transit.morning.commuteStart}</p>
+            <p style="margin: 0; font-weight: 600;">${timelines.jocelyn.transit.morning.commuteStart}</p>
             <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Leaves home in Lawrenceville</p>
           </div>
           
           <div style="margin-bottom: 1rem; position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
             <p style="margin: 0; font-weight: 600;">Walk to 93 bus stop</p>
-            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jen.transit.morning.walkToStop.duration} • 📍 ${timelines.jen.transit.morning.walkToStop.distance}</p>
+            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jocelyn.transit.morning.walkToStop.duration} • 📍 ${timelines.jocelyn.transit.morning.walkToStop.distance}</p>
           </div>
           
           <div style="margin-bottom: 1rem; position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
             <p style="margin: 0; font-weight: 600;">93 Bus to UPMC</p>
-            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jen.transit.morning.busRide.duration}</p>
+            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jocelyn.transit.morning.busRide.duration}</p>
           </div>
           
           <div style="margin-bottom: 1rem; position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #4e79a7; border-radius: 50%; border: 2px solid #fff;"></div>
             <p style="margin: 0; font-weight: 600;">Walk to Medical Building</p>
-            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jen.transit.morning.walkToWork.duration} • 📍 ${timelines.jen.transit.morning.walkToWork.distance}</p>
+            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jocelyn.transit.morning.walkToWork.duration} • 📍 ${timelines.jocelyn.transit.morning.walkToWork.distance}</p>
           </div>
           
           <div style="position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #28a745; border-radius: 50%; border: 2px solid #fff;"></div>
-            <p style="margin: 0; color: #28a745; font-weight: 600;">${timelines.jen.transit.morning.arrival}</p>
+            <p style="margin: 0; color: #28a745; font-weight: 600;">${timelines.jocelyn.transit.morning.arrival}</p>
             <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Arrives at work</p>
             <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; font-style: italic;">Total: ~25 minutes</p>
           </div>
@@ -401,26 +436,26 @@ html`
           
           <div style="margin-bottom: 1rem; position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #28a745; border-radius: 50%; border: 2px solid #fff;"></div>
-            <p style="margin: 0; font-weight: 600;">${timelines.jen.car.morning.commuteStart}</p>
+            <p style="margin: 0; font-weight: 600;">${timelines.jocelyn.car.morning.commuteStart}</p>
             <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Flexible departure time</p>
           </div>
           
           <div style="margin-bottom: 1rem; position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #28a745; border-radius: 50%; border: 2px solid #fff;"></div>
             <p style="margin: 0; font-weight: 600;">Drive to UPMC</p>
-            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jen.car.morning.driveDuration}</p>
+            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jocelyn.car.morning.driveDuration}</p>
             <p style="margin: 0.2rem 0 0 0; font-size: 0.8rem;">Direct route, no transfers</p>
           </div>
           
           <div style="position: relative;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #28a745; border-radius: 50%; border: 2px solid #fff;"></div>
             <p style="margin: 0; font-weight: 600;">Parking</p>
-            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jen.car.morning.parking}</p>
+            <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">⏱️ ${timelines.jocelyn.car.morning.parking}</p>
           </div>
           
           <div style="position: relative; margin-bottom: 1rem;">
             <div style="position: absolute; left: -2.4rem; top: 0.3rem; width: 12px; height: 12px; background: #28a745; border-radius: 50%; border: 2px solid #fff;"></div>
-            <p style="margin: 0; color: #28a745; font-weight: 600;">${timelines.jen.car.morning.arrival}</p>
+            <p style="margin: 0; color: #28a745; font-weight: 600;">${timelines.jocelyn.car.morning.arrival}</p>
             <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Arrives at work</p>
             <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; font-style: italic;">Total: ~20-25 minutes</p>
           </div>
@@ -439,157 +474,88 @@ html`
 ```
 
 
-## Neighborhood Infrastructure Comparison
+## Neighborhood Infrastructure Comparison- A Neighborhood-Level Visual Snapshot
 
 ```js
 html`
-<div class="grid grid-cols-2" style="margin-top: 2rem; margin-bottom: 2rem; gap: 2rem;">
-  <--trace Neighborhood Mini-Map A: Jordan's Transit-Dependent Area -->
-  <div class="card" style="padding: 2rem;">
-    <h3 style="margin: 0 0 1.5rem 0; color: #4e79a7;">📍 Map A: Transit-Dependent Neighborhood (Jordan - Brentwood)</h3>
-    <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem;">Low-income with transit access: Median income $54,446 • 21.5% no-vehicle households</p>
-    
-    <svg width="100%" height="300" viewBox="0 0 400 300" style="border: 2px solid #ddd; border-radius: 0.5rem; background: #fff; margin-bottom: 1.5rem;">
-      <--trace Grid background -->
-      <defs>
-        <pattern id="grid-a" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="0.5"/>
-        </pattern>
-      </defs>
-      <rect width="400" height="300" fill="url(#grid-a)" />
-      
-      <--trace Major streets -->
-      <line x1="20" y1="150" x2="380" y2="150" stroke="#bbb" stroke-width="3"/>
-      <line x1="200" y1="20" x2="200" y2="280" stroke="#bbb" stroke-width="3"/>
-      
-      <--trace Bus routes (multiple, frequent) -->
-      <line x1="20" y1="100" x2="380" y2="100" stroke="#4e79a7" stroke-width="2" stroke-dasharray="5,5"/>
-      <line x1="20" y1="200" x2="380" y2="200" stroke="#4e79a7" stroke-width="2" stroke-dasharray="5,5"/>
-      <line x1="100" y1="20" x2="100" y2="280" stroke="#4e79a7" stroke-width="2" stroke-dasharray="5,5"/>
-      <line x1="300" y1="20" x2="300" y2="280" stroke="#4e79a7" stroke-width="2" stroke-dasharray="5,5"/>
-      
-      <--trace Bus stops (many, dense) -->
-      <circle cx="60" cy="100" r="5" fill="#4e79a7"/>
-      <circle cx="120" cy="100" r="5" fill="#4e79a7"/>
-      <circle cx="180" cy="100" r="5" fill="#4e79a7"/>
-      <circle cx="240" cy="100" r="5" fill="#4e79a7"/>
-      <circle cx="300" cy="100" r="5" fill="#4e79a7"/>
-      <circle cx="340" cy="100" r="5" fill="#4e79a7"/>
-      
-      <circle cx="100" cy="150" r="5" fill="#4e79a7"/>
-      <circle cx="200" cy="150" r="5" fill="#4e79a7"/>
-      <circle cx="300" cy="150" r="5" fill="#4e79a7"/>
-      
-      <circle cx="60" cy="200" r="5" fill="#4e79a7"/>
-      <circle cx="120" cy="200" r="5" fill="#4e79a7"/>
-      <circle cx="180" cy="200" r="5" fill="#4e79a7"/>
-      <circle cx="240" cy="200" r="5" fill="#4e79a7"/>
-      <circle cx="300" cy="200" r="5" fill="#4e79a7"/>
-      <circle cx="340" cy="200" r="5" fill="#4e79a7"/>
-      
-      <--trace Walking distance circles (short) -->
-      <circle cx="180" cy="150" r="40" fill="none" stroke="#28a745" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
-      
-      <--trace Home location -->
-      <rect x="165" y="135" width="30" height="30" fill="#fff" stroke="#28a745" stroke-width="2" rx="2"/>
-      <text x="180" y="155" text-anchor="middle" fill="#000" font-weight="bold" font-size="16">🏠</text>
-      
-      <--trace Safety features -->
-      <circle cx="80" cy="180" r="3" fill="#ffc107"/>
-      <circle cx="250" cy="120" r="3" fill="#ffc107"/>
-      <circle cx="320" cy="170" r="3" fill="#ffc107"/>
-      <text x="380" y="290" text-anchor="end" fill="#ffc107" font-size="10">�� Street lights</text>
-    </svg>
-    
-    <div style="background: rgba(78, 121, 167, 0.15); padding: 1rem; border-radius: 0.5rem; border-left: 3px solid #4e79a7;">
-      <h4 style="margin: 0 0 0.5rem 0; color: #4e79a7;">✓ Transit-Dependent Access</h4>
-      <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
-        <li style="margin: 0.3rem 0;">27 bus stops within area (routes Y1, 51)</li>
-        <li style="margin: 0.3rem 0;">2 bus routes provide coverage to downtown</li>
-        <li style="margin: 0.3rem 0;">Average walk: 10-15 minutes to transit</li>
-        <li style="margin: 0.3rem 0;">Service frequency: Every 15-20 min during peak</li>
-        <li style="margin: 0.3rem 0;">High transit reliance: 21.5% no-vehicle access</li>
-        <li style="margin: 0.3rem 0;">Commute time to employment: 41-60 minutes</li>
-      </ul>
-    </div>
-  </div>
+<div>
+    <iframe width="100%" height="600" allow="local-network-access; geolocation" title="Neighborhood-Level Visual Snapshot - Time on Transit to Oakland" src="https://carnegiemellon.maps.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=de62d2d1668548329d7bae60e1768061&theme=light&scroll=false&center=-79.94770734495785,40.47197766398784&scale=577790.554289" ></iframe>
+</div>
+`
+```
 
-  <--trace Neighborhood Mini-Map B: Middle-Income Mixed Access -->
-  <div class="card" style="padding: 2rem;">
-    <h3 style="margin: 0 0 1.5rem 0; color: #f28e2c;">📍 Map B: Mixed-Access Neighborhood (Jocelyn - Lower Lawrenceville)</h3>
-    <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem;">Middle-income with both transit and car access: Median income $86,094 • 11.3% no-vehicle households</p>
-    
-    <svg width="100%" height="300" viewBox="0 0 400 300" style="border: 2px solid #ddd; border-radius: 0.5rem; background: #fff; margin-bottom: 1.5rem;">
-      <--trace Grid background -->
-      <defs>
-        <pattern id="grid-b" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="0.5"/>
-        </pattern>
-      </defs>
-      <rect width="400" height="300" fill="url(#grid-b)" />
-      
-      <--trace Major streets (mixed use) -->
-      <line x1="20" y1="150" x2="380" y2="150" stroke="#bbb" stroke-width="3"/>
-      <line x1="200" y1="20" x2="200" y2="280" stroke="#bbb" stroke-width="3"/>
-      <line x1="80" y1="20" x2="80" y2="280" stroke="#ccc" stroke-width="2"/>
-      <line x1="320" y1="20" x2="320" y2="280" stroke="#ccc" stroke-width="2"/>
-      
-      <--trace Bus routes (multiple, reasonable coverage) -->
-      <line x1="20" y1="100" x2="380" y2="100" stroke="#f28e2c" stroke-width="2" stroke-dasharray="8,5"/>
-      <line x1="20" y1="200" x2="380" y2="200" stroke="#f28e2c" stroke-width="2" stroke-dasharray="8,5"/>
-      <line x1="80" y1="20" x2="80" y2="280" stroke="#f28e2c" stroke-width="2" stroke-dasharray="8,5"/>
-      <line x1="320" y1="20" x2="320" y2="280" stroke="#f28e2c" stroke-width="2" stroke-dasharray="8,5"/>
-      <line x1="200" y1="50" x2="200" y2="250" stroke="#f28e2c" stroke-width="2" stroke-dasharray="8,5"/>
-      
-      <--trace Bus stops (moderate density, good access) -->
-      <circle cx="50" cy="100" r="5" fill="#f28e2c"/>
-      <circle cx="120" cy="100" r="5" fill="#f28e2c"/>
-      <circle cx="200" cy="100" r="5" fill="#f28e2c"/>
-      <circle cx="280" cy="100" r="5" fill="#f28e2c"/>
-      <circle cx="350" cy="100" r="5" fill="#f28e2c"/>
-      
-      <circle cx="80" cy="150" r="5" fill="#f28e2c"/>
-      <circle cx="200" cy="150" r="5" fill="#f28e2c"/>
-      <circle cx="320" cy="150" r="5" fill="#f28e2c"/>
-      
-      <circle cx="50" cy="200" r="5" fill="#f28e2c"/>
-      <circle cx="120" cy="200" r="5" fill="#f28e2c"/>
-      <circle cx="200" cy="200" r="5" fill="#f28e2c"/>
-      <circle cx="280" cy="200" r="5" fill="#f28e2c"/>
-      <circle cx="350" cy="200" r="5" fill="#f28e2c"/>
-      
-      <circle cx="200" cy="70" r="5" fill="#f28e2c"/>
-      <circle cx="200" cy="230" r="5" fill="#f28e2c"/>
-      
-      <--trace Walking distance circles (moderate) -->
-      <circle cx="180" cy="150" r="50" fill="none" stroke="#f28e2c" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
-      
-      <--trace Home location -->
-      <rect x="155" y="125" width="50" height="50" fill="#fff" stroke="#f28e2c" stroke-width="2" rx="2"/>
-      <text x="180" y="165" text-anchor="middle" fill="#000" font-weight="bold" font-size="24">🏠</text>
-      
-      <--trace Parking availability -->
-      <rect x="30" y="240" width="40" height="30" fill="#ddd" opacity="0.4" stroke="#999" stroke-width="1"/>
-      <text x="50" y="260" text-anchor="middle" fill="#999" font-size="9">P</text>
-      
-      <--trace Good walkability indicators -->
-      <circle cx="320" cy="80" r="3" fill="#28a745"/>
-      <circle cx="80" cy="220" r="3" fill="#28a745"/>
-      <text x="380" y="290" text-anchor="end" fill="#28a745" font-size="10">✓ Walkable/Safe</text>
-    </svg>
-    
-    <div style="background: rgba(242, 142, 44, 0.15); padding: 1rem; border-radius: 0.5rem; border-left: 3px solid #f28e2c;">
-      <h4 style="margin: 0 0 0.5rem 0; color: #f28e2c;">✓ Transit + Car Flexibility</h4>
-      <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.9rem;">
-        <li style="margin: 0.3rem 0;">41 bus stops within area (5 routes including 93)</li>
-        <li style="margin: 0.3rem 0;">Multiple route options provide coverage</li>
-        <li style="margin: 0.3rem 0;">Average walk: 5-10 minutes to transit</li>
-        <li style="margin: 0.3rem 0;">Service frequency: Every 10-15 min during peak</li>
-        <li style="margin: 0.3rem 0;">Good vehicle access: 11.3% no-vehicle households</li>
-        <li style="margin: 0.3rem 0;">Commute time by transit: ~25 minutes (choice)</li>
-        <li style="margin: 0.3rem 0;">Can use car for flexibility/errands when needed</li>
-      </ul>
-    </div>
+## Summary Comparison Table 
+
+```js
+html`
+<div style="margin-top: 2rem;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; table-layout: fixed;">
+    <thead>
+      <tr style="background: #f5f5f5;">
+        <th style="border: 1px solid #ddd; padding: 1rem; text-align: left; font-weight: 600;">Factor</th>
+        <th style="border: 1px solid #ddd; padding: 1rem; text-align: left; font-weight: 600; color: #4e79a7;">Jordan (Brentwood)</th>
+        <th style="border: 1px solid #ddd; padding: 1rem; text-align: left; font-weight: 600; color: #f28e2c;">Jocelyn (Lower Lawrenceville)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Income Level</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">$54,446 (Low)</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">$86,094 (Higher)</td>
+      </tr>
+      <tr style="background: #fafafa;">
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Vehicle Access</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">None (21.5% of households)</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">Yes (11.3% of households)</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Transit Routes</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">2 routes (51, Y1)</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">5 routes (91, 64, 88, 86, 54)</td>
+      </tr>
+      <tr style="background: #fafafa;">
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Transit Access</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">Low (27 stops)</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">High (41 stops)</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Morning Commute Time</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;"><strong style="color: #d9534f;">60 minutes</strong></td>
+        <td style="border: 1px solid #ddd; padding: 1rem;"><strong style="color: #28a745;">25 minutes (transit) or 20-25 (car)</strong></td>
+      </tr>
+      <tr style="background: #fafafa;">
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Transfers Required</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">1 transfer (51 → 54 bus)</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">0 transfers (direct route available)</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Transportation Mode</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">Bus + Walking (only option)</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">Bus + Car (choice)</td>
+      </tr>
+      <tr style="background: #fafafa;">
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Commute Flexibility</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">Fixed (depends on bus schedule)</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">High (can choose transit or drive)</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Daily Time Burden</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;"><strong style="color: #d9534f;">~2 hours round-trip</strong></td>
+        <td style="border: 1px solid #ddd; padding: 1rem;"><strong style="color: #28a745;">~50 minutes round-trip</strong></td>
+      </tr>
+      <tr style="background: #fafafa;">
+        <td style="border: 1px solid #ddd; padding: 1rem; font-weight: 600;">Equity Issue</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">Transport-dependent; limited choices</td>
+        <td style="border: 1px solid #ddd; padding: 1rem;">Transport-advantaged; multiple options</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(217, 83, 79, 0.1); border-left: 4px solid #d9534f; border-radius: 0.5rem;">
+    <h4 style="margin: 0 0 0.5rem 0; color: #d9534f;">Key Takeaway</h4>
+    <p style="margin: 0; font-size: 0.95rem;">
+      Jordan spends <strong>60 minutes commuting to work</strong> due to limited transit options and required transfers, while Jocelyn can reach the same destination in <strong>25 minutes by bus or 20-25 minutes by car</strong>. This inequality reveals how neighborhood infrastructure and vehicle access create vastly different mobility experiences—and significantly different quality-of-life outcomes for Pittsburgh residents.
+    </p>
   </div>
 </div>
 `
