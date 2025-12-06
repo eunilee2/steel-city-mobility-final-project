@@ -470,19 +470,16 @@ html`
     
   </div>
 </div>
-`
-```
-
-
-## Neighborhood Infrastructure Comparison- A Neighborhood-Level Visual Snapshot
-
-```js
-html`
 <div>
     <iframe width="100%" height="600" allow="local-network-access; geolocation" title="Neighborhood-Level Visual Snapshot - Time on Transit to Oakland" src="https://carnegiemellon.maps.arcgis.com/apps/mapviewer/index.html?configurableview=true&webmap=de62d2d1668548329d7bae60e1768061&theme=light&scroll=false&center=-79.94770734495785,40.47197766398784&scale=577790.554289" ></iframe>
 </div>
 `
 ```
+The map above visualizes estimated travel times from each persona’s neighborhood to Oakland, and these estimates align closely with the commute timelines shown below. For Jocelyn, living in a well-connected neighborhood with multiple reliable routes, her estimated and actual travel times remain short and flexible.
+
+For Jordan, however, the same travel-time map tells only part of the story. Although the estimated 41–60 minute commute from Brentwood matches his timeline, real conditions (such as delays, missed transfers, or reductions to key routes) can significantly extend his travel time. Because he has no car and relies solely on two critical bus lines, any service disruption disproportionately affects him.
+
+Together, the map and timelines highlight how transit accessibility is not only about distance, but also about reliability and how changes to service can deepen inequities for riders who depend on the system most.
 
 ## Summary Comparison Table 
 
