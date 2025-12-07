@@ -559,3 +559,14 @@ html`
 </div>
 `
 ```
+
+---
+
+*Built with Observable and ArcGIS Online (Dec 2025)*
+
+*Data Sources Used*
+- *ACS Vehicle Availability Variables - Boundaries, ArcGIS, https://carnegiemellon.maps.arcgis.com/home/item.html?id=9a9e43ec1603446880c50d4ed1df2207*
+- *ACS Poverty Status Variables - Boundaries, ArcGIS, https://carnegiemellon.maps.arcgis.com/home/item.html?id=0e468b75bca545ee8dc4b039cbb5aff6*
+- *ACS Median Household Income Variables - Boundaries, ArcGIS, https://carnegiemellon.maps.arcgis.com/home/item.html?id=45ede6d6ff7e4cbbbffa60d34227e462*
+- *PRT Routes - Current (full system), Pittsburgh Regional Transit Open Geospatial Data, https://carnegiemellon.maps.arcgis.com/home/item.html?id=9483dc3e6dc8495badef05a3f7f38dff*
+- *PRT Stops - Current (full system), Pittsburgh Regional Transit Open Geospatial Data, https://carnegiemellon.maps.arcgis.com/home/item.html?id=a29f37608eb34c3895332ff99eea9b17*
